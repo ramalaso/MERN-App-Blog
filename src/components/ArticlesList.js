@@ -1,12 +1,10 @@
 import React from 'react';
-import articleContent from './article-content';
 import { Link } from 'react-router-dom';
 
-function ArticleList() {
+function ArticlesList({ articles }) {
   return (
     <>
-      <h1>Articles</h1>
-      {articleContent.map((article, key) => (
+      {articles.map((article, key) => (
         <Link
           className="article-list-item"
           key={key}
@@ -20,4 +18,4 @@ function ArticleList() {
   );
 }
 
-export default ArticleList;
+export default ArticlesList;

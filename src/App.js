@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import './App.css';
 import HomePage from './pages/HomePage';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import AboutPage from './pages/AboutPage';
-import ArticleList from './pages/ArticleList';
+import ArticleListPage from './pages/ArticleListPage';
 import ArticlePage from './pages/ArticlePage';
 import NavBar from './NavBar';
+import NotFoundPage from './pages/NotFoundPage';
 
 class App extends Component {
   render() {
@@ -14,10 +15,13 @@ class App extends Component {
         <div className="App">
           <NavBar />
           <div id="page-body">
-            <Route path="/" component={HomePage} exact />
-            <Route path="/about" component={AboutPage} />
-            <Route path="/articles-list" component={ArticleList} />
-            <Route path="/article/:name" component={ArticlePage} />
+            <Switch>
+              <Route path="/" component={HomePage} exact />
+              <Route path="/about" component={AboutPage} />
+              <Route path="/articles-list" component={ArticleListPage} />
+              <Route path="/article/:name" component={ArticlePage} />
+              <Route component={NotFoundPage} />
+            </Switch>
           </div>
         </div>
       </Router>
