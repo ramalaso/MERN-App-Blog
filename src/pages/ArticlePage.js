@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import ArticlesList from '../components/ArticlesList';
 import articleContent from './article-content';
 import NotFoundPage from './NotFoundPage';
@@ -6,6 +6,7 @@ import NotFoundPage from './NotFoundPage';
 function ArticlePage({ match }) {
   const name = match.params.name;
   const article = articleContent.find((article) => article.name === name);
+  const [articleInfo, setArticleInfo] = setState({});
   if (!article) return <NotFoundPage />;
   const otherArticles = articleContent.filter(
     (article) => article.name !== name
