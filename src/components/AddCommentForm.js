@@ -1,17 +1,44 @@
-import React from 'react';
+import React, { useState } from 'react';
 
-function AddCommentForm() {
+function AddCommentForm({ articleName, setArticleInfo }) {
+  const [username, setUsername] = useState('');
+  const [commentText, setCommentText] = useState('');
+
+  const addComment = async () => {
+    const result = await fetch(`/api/articles/${articleName}/add-comment`, {
+      method: 'post',
+      body: JSON.stringify({ username, text: commentText }),
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    });
+    const body = await result.json();
+    setArticleInfo(body);
+    setUsername('');
+    setCommentText('');
+  };
   return (
     <div id="add-comment-form">
       <h3>Add a comment</h3>
       <label htmlFor="">
         Name:
-        <input type="text" />
+        <input
+          type="text"
+          value={username}
+          onChange={(event) => setUsername(event.target.value)}
+        />
       </label>
       <label htmlFor="">
-        <textarea id="" cols="4" rows="50"></textarea>
+        Comment:
+        <textarea
+          id=""
+          cols="4"
+          rows="5"
+          value={commentText}
+          onChange={(event) => setCommentText(event.target.value)}
+        ></textarea>
       </label>
-      <button>Add Comment</button>
+      <button onClick={() => addComment()}>Add Comment</button>
     </div>
   );
 }
