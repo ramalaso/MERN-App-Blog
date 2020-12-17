@@ -4,6 +4,7 @@ import { MongoClient } from 'mongodb';
 const app = express();
 
 app.use(express.json());
+app.set('trust proxy', 1); // trust first proxy
 
 const withDB = async (operations, res) => {
   try {
@@ -17,6 +18,13 @@ const withDB = async (operations, res) => {
     res.status(500).json({ message: 'Error connecting to db', error });
   }
 };
+
+app.get('/api/articles', async (req, res) => {
+  withDB(async (db) => {
+    const articles = await db.collection('articles').findAll();
+    res.status(200).json(articles);
+  }, res);
+});
 
 app.get('/api/articles/:name', async (req, res) => {
   withDB(async (db) => {
