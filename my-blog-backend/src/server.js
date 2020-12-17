@@ -1,10 +1,11 @@
 import express from 'express';
-
 import { MongoClient } from 'mongodb';
+import path from 'path';
 const app = express();
 
 app.use(express.json());
 app.set('trust proxy', 1); // trust first proxy
+app.use(express.static(path.join(__dirname, '/build')));
 
 const withDB = async (operations, res) => {
   try {
@@ -80,5 +81,9 @@ app.post('/api/articles/:name/add-comment', (req, res) => {
 });
 
 app.get('/hello', (req, res) => res.send('Hello' + req.body.name));
+
+app.get('*', (req, res) => {
+  res.sendFile(path.join(__dirname + '/build/index.html'));
+});
 
 app.listen(3001, () => console.log('Listening on port 3001'));
